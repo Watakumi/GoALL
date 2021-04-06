@@ -197,6 +197,11 @@ export default function Dashboard() {
                 <CardList />
               </Paper>
             </Grid>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <CardList />
+              </Paper>
+            </Grid>
           </Grid>
           <Box pt={4}>
             <Copyright />
