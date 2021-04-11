@@ -12,7 +12,7 @@ const CardList = ({ label_id }) => {
   const { loading, error, data } = useQuery(GET_LABEL, {
     variables: { id: label_id },
   });
-  console.log(data);
+
   if (loading) return <CircularProgress size={50} />;
   if (error) return `Error! ${error.message}`;
   return (

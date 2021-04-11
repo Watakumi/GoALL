@@ -6,6 +6,7 @@ const GET_LABEL = gql`
       id
       name
       goals {
+        id
         title
         description
       }
