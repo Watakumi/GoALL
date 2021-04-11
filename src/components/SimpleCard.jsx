@@ -18,13 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-const goal = {
-  title: '早起きする',
-  description: '早起きが苦手なのでまず起きる週間を身に着ける！',
-  actionName: '達成',
-};
-
-export default function SimpleCard() {
+export default function SimpleCard({ goal }) {
   const classes = useStyles();
 
   return (
