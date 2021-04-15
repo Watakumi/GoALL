@@ -2,9 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: './src/index.js',
-  },
+  entry: './src/index.js',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Production',
@@ -16,10 +14,13 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: path.resolve(__dirname, 'node_modules'),
         loader: 'babel-loader',
       },
