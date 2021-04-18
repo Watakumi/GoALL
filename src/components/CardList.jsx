@@ -3,10 +3,87 @@ import SimpleCard from './SimpleCard';
 import Grid from '@material-ui/core/Grid';
 import GET_LABEL from '../graphql/queries/GetLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { Typography } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { useForm, Controller } from 'react-hook-form';
+import ADD_GOAL from '../graphql/mutations/AddGoal';
+
+const FormDialog = ({ label_id }) => {
+  const [addGoal] = useMutation(ADD_GOAL);
+
+  const { control, handleSubmit, reset } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    addGoal({
+      variables: { title: data.title, description: data.description, labelId: label_id },
+    });
+    reset({ title: '', description: '' });
+    handleClose();
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        目標を追加
+      </Button>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">新規目標</DialogTitle>
+        <DialogContent>
+          <Controller
+            name="title"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField autoFocus margin="dense" label="名前" type="string" fullWidth {...field} />
+            )}
+          />
+          <Controller
+            name="description"
+            control={control}
+            defaultValue=""
+            rules={{ required: false }}
+            render={({ field }) => (
+              <TextField
+                margin="dense"
+                label="説明"
+                type="string"
+                rows={3}
+                multiline
+                fullWidth
+                {...field}
+              />
+            )}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            キャンセル
+          </Button>
+          <Button onClick={handleSubmit(onSubmit)} color="primary">
+            追加
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
 
 const CardList = ({ label_id }) => {
   const { loading, error, data } = useQuery(GET_LABEL, {
@@ -23,9 +100,7 @@ const CardList = ({ label_id }) => {
             {data.label.name}
           </Typography>
         </Box>
-        <Button variant="contained" color="primary">
-          目標を追加する
-        </Button>
+        <FormDialog label_id={label_id} />
       </Box>
       <Grid container spacing={4}>
         {data.label.goals.map((goal) => (
