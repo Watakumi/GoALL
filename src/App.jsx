@@ -1,7 +1,7 @@
+import Dashboard from './pages/Dashboard';
 import React from 'react';
-import Top from './components/Top';
 function App() {
-  return <Top />;
+  return <Dashboard />;
 }
 
 export default App;
