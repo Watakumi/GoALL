@@ -3,26 +3,18 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from '../components/listItems';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import LabelIcon from '@material-ui/icons/Label';
-import ListItemText from '@material-ui/core/ListItemText';
 import Main from './Main';
 import LabelList from './LabelList';
-import ListItemLink from '../components/ListItemLink';
-import { MemoryRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import { HashRouter, Route, Switch, Link } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 
 const drawerWidth = 240;
 
@@ -84,6 +76,16 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
   },
+  appBarSpacer: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+  },
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  },
 }));
 
 export default function Dashboard() {
@@ -127,31 +129,24 @@ export default function Dashboard() {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <Box>
-          <ListItemLink to="/labels" primary="ラベル管理" icon={<LabelIcon color="primary" />} />
-        </Box>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <Sidebar onClick={handleDrawerClose} />
       </Drawer>
 
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route exact path="/labels">
-            <LabelList />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          <HashRouter>
+            <Switch>
+              <Route exact path="/">
+                <Main />
+              </Route>
+              <Route exact path="/labels">
+                <LabelList />
+              </Route>
+            </Switch>
+          </HashRouter>
+        </Container>
+      </main>
     </div>
   );
 }
