@@ -10,6 +10,7 @@ import LabelIcon from '@material-ui/icons/Label';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import { mainListItems, secondaryListItems } from '../components/listItems';
+import ListItemLink from '../components/ListItemLink';
 
 const useStyles = makeStyles((theme) => ({
   toolbarIcon: {
@@ -32,12 +33,7 @@ const Sidebar = ({ onClick }) => {
       </div>
       <Divider />
       <Box>
-        <ListItem button>
-          <ListItemIcon>
-            <LabelIcon color="primary" />
-          </ListItemIcon>
-          <ListItemText primary="ラベル管理" />
-        </ListItem>
+        <ListItemLink to="/labels" primary="ラベル管理" icon={<LabelIcon color="primary" />} />
       </Box>
       <Divider />
       <List>{mainListItems}</List>
