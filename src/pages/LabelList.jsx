@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import GET_LABELS from '../graphql/queries/GetLabels';
@@ -16,6 +15,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { useForm, Controller } from 'react-hook-form';
 import LabelCard from '../components/LabelCard';
 import ADD_LABEL from '../graphql/mutations/AddLabel';
+import Paper from '@material-ui/core/Paper';
 const FormDialog = () => {
   const [addLabel] = useMutation(ADD_LABEL);
 
@@ -70,38 +70,23 @@ const FormDialog = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
   },
-  fixedHeight: {
-    height: 240,
-  },
 }));
 
 const LabelList = () => {
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const { loading, error, data } = useQuery(GET_LABELS);
 
   if (loading) return <CircularProgress size={50} />;
   if (error) return `Error! ${error.message}`;
   return (
     <>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
+      <Paper className={classes.paper}>
         <Box display="flex" justifyContent="space-between" mr={2} mb={2}>
           <Box fontWeight="fontWeightBold" fontSize="1.5rem">
             <Typography variant="h5" component="h2" color="primary">
@@ -117,7 +102,7 @@ const LabelList = () => {
             </Grid>
           ))}
         </Grid>
-      </main>
+      </Paper>
     </>
   );
 };
