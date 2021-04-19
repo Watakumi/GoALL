@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloClient, fromPromise, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
+import { HashRouter } from 'react-router-dom';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
@@ -13,7 +14,9 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
