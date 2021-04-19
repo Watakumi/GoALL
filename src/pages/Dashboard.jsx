@@ -13,7 +13,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Main from './Main';
 import LabelList from './LabelList';
 import Sidebar from './Sidebar';
-import { HashRouter, Route, Switch, Link } from 'react-router-dom';
+import { HashRouter, Route, Switch, Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 
 const drawerWidth = 240;
@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textDecoration: 'none',
   },
   drawerPaper: {
     position: 'relative',
@@ -112,7 +113,15 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+            component={RouterLink}
+            to="/"
+          >
             Dashboard
           </Typography>
           <IconButton color="inherit">
@@ -122,20 +131,20 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <Sidebar onClick={handleDrawerClose} />
-      </Drawer>
+      <HashRouter>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          }}
+          open={open}
+        >
+          <Sidebar onClick={handleDrawerClose} />
+        </Drawer>
 
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <HashRouter>
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
             <Switch>
               <Route exact path="/">
                 <Main />
@@ -144,9 +153,9 @@ export default function Dashboard() {
                 <LabelList />
               </Route>
             </Switch>
-          </HashRouter>
-        </Container>
-      </main>
+          </Container>
+        </main>
+      </HashRouter>
     </div>
   );
 }
