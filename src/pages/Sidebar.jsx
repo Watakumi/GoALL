@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LabelIcon from '@material-ui/icons/Label';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
-import { mainListItems, secondaryListItems } from '../components/listItems';
+import { mainListItems, SecondaryListItems } from '../components/listItems';
 import ListItemLink from '../components/ListItemLink';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,9 @@ const Sidebar = ({ onClick }) => {
       <Divider />
       <List>{mainListItems}</List>
       <Divider />
-      <List>{secondaryListItems}</List>
+      <List>
+        <SecondaryListItems />
+      </List>
     </>
   );
 };

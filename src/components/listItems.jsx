@@ -9,6 +9,10 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import GET_LABELS from '../graphql/queries/GetLabels';
+import { useQuery } from '@apollo/client';
+import ListItemLink from './ListItemLink';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const mainListItems = (
   <div>
@@ -45,26 +49,22 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
-  </div>
-);
+export const SecondaryListItems = () => {
+  const { loading, error, data } = useQuery(GET_LABELS);
+
+  if (loading) return <CircularProgress size={50} />;
+  if (error) return `Error! ${error.message}`;
+  return (
+    <div>
+      <ListSubheader inset>MYラベル</ListSubheader>
+      {data.labels.map((label) => (
+        <ListItemLink
+          key={label.id}
+          to={`/labels/${label.id}`}
+          primary={`${label.name}`}
+          icon={<AssignmentIcon />}
+        />
+      ))}
+    </div>
+  );
+};
