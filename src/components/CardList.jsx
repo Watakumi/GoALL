@@ -12,10 +12,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import { useForm, Controller } from 'react-hook-form';
 import ADD_GOAL from '../graphql/mutations/AddGoal';
+import { useParams } from 'react-router-dom';
 
-const FormDialog = ({ label_id }) => {
+const FormDialog = () => {
   const [addGoal] = useMutation(ADD_GOAL);
 
   const { control, handleSubmit, reset } = useForm();
@@ -85,31 +88,52 @@ const FormDialog = ({ label_id }) => {
   );
 };
 
-const CardList = ({ label_id }) => {
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+    minHeight: '215px',
+  },
+  navigationMessage: {
+    fontSize: '2rem',
+  },
+}));
+
+const CardList = () => {
+  const classes = useStyles();
+  const { id } = useParams();
   const { loading, error, data } = useQuery(GET_LABEL, {
-    variables: { id: label_id },
+    variables: { id: Number(id) },
   });
 
   if (loading) return <CircularProgress size={50} />;
   if (error) return `Error! ${error.message}`;
   return (
-    <>
+    <Paper className={classes.paper}>
       <Box display="flex" justifyContent="space-between" mr={2} mb={2}>
         <Box fontWeight="fontWeightBold" fontSize="1.5rem">
           <Typography variant="h5" component="h2" color="primary">
             {data.label.name}
           </Typography>
         </Box>
-        <FormDialog label_id={label_id} />
+        <FormDialog label_id={Number(id)} />
       </Box>
-      <Grid container spacing={4}>
-        {data.label.goals.map((goal) => (
-          <Grid item key={goal.id} xs={12} sm={6} md={4}>
-            <SimpleCard goal={goal} />
-          </Grid>
-        ))}
-      </Grid>
-    </>
+      {data.label.goals.length > 0 ? (
+        <Grid container spacing={4}>
+          {data.label.goals.map((goal) => (
+            <Grid item key={goal.id} xs={12} sm={6} md={4}>
+              <SimpleCard goal={goal} />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Typography className={classes.navigationMessage}>
+          達成すべき目標がありません！目標を追加しましょう！
+        </Typography>
+      )}
+    </Paper>
   );
 };
 
