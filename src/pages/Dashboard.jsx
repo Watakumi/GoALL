@@ -15,6 +15,7 @@ import LabelList from './LabelList';
 import Sidebar from './Sidebar';
 import { HashRouter, Route, Switch, Link as RouterLink } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
+import CardList from '../components/CardList';
 
 const drawerWidth = 240;
 
@@ -151,6 +152,9 @@ export default function Dashboard() {
               </Route>
               <Route exact path="/labels">
                 <LabelList />
+              </Route>
+              <Route exact path="/labels/:id">
+                <CardList />
               </Route>
             </Switch>
           </Container>
