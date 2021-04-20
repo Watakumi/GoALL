@@ -1,7 +1,6 @@
 import React from 'react';
-import SimpleCard from './SimpleCard';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import GET_LABEL from '../graphql/queries/GetLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useQuery, useMutation } from '@apollo/client';
 import Button from '@material-ui/core/Button';
@@ -15,31 +14,28 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useForm, Controller } from 'react-hook-form';
-import ADD_GOAL from '../graphql/mutations/AddGoal';
 import { useParams } from 'react-router-dom';
+import ADD_GOAL from '../graphql/mutations/AddGoal';
+import GET_LABEL from '../graphql/queries/GetLabel';
+import SimpleCard from './SimpleCard';
 
-const FormDialog = () => {
-  const [addGoal] = useMutation(ADD_GOAL);
-
-  const { control, handleSubmit, reset } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    addGoal({
-      variables: { title: data.title, description: data.description, labelId: label_id },
-    });
-    reset({ title: '', description: '' });
-    handleClose();
-  };
-
+const FormDialog = ({ labelId }) => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
+  const [addGoal] = useMutation(ADD_GOAL);
+  const { control, handleSubmit, reset } = useForm();
+  const onSubmit = (data) => {
+    addGoal({
+      variables: { title: data.title, description: data.description, labelId },
+    });
+    reset({ title: '', description: '' });
+    handleClose();
+  };
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -107,7 +103,7 @@ const CardList = () => {
   const { loading, error, data } = useQuery(GET_LABEL, {
     variables: { id: Number(id) },
   });
-  scrollTo(0, 0);
+  window.scrollTo(0, 0);
 
   if (loading) return <CircularProgress size={50} />;
   if (error) return `Error! ${error.message}`;
@@ -119,7 +115,7 @@ const CardList = () => {
             {data.label.name}
           </Typography>
         </Box>
-        <FormDialog label_id={Number(id)} />
+        <FormDialog labelId={Number(id)} />
       </Box>
       {data.label.goals.length > 0 ? (
         <Grid container spacing={4}>
@@ -137,5 +133,7 @@ const CardList = () => {
     </Paper>
   );
 };
-
+FormDialog.propTypes = {
+  labelId: PropTypes.number.isRequired,
+};
 export default CardList;

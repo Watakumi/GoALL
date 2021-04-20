@@ -10,6 +10,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:jsx-a11y/recommended',
+    'prettier',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -19,5 +20,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react'],
-  rules: {},
+  rules: {
+    'react/jsx-props-no-spreading': 'off',
+  },
 };
