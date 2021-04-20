@@ -107,6 +107,7 @@ const CardList = () => {
   const { loading, error, data } = useQuery(GET_LABEL, {
     variables: { id: Number(id) },
   });
+  scrollTo(0, 0);
 
   if (loading) return <CircularProgress size={50} />;
   if (error) return `Error! ${error.message}`;
