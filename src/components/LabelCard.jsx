@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   root: {
@@ -37,3 +38,7 @@ export default function LabelCard({ label }) {
     </Card>
   );
 }
+
+LabelCard.propTypes = {
+  label: PropTypes.number.isRequired,
+};
