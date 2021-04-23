@@ -4,6 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import List from '@material-ui/core/List';
+import ErrorIcon from '@material-ui/icons/Error';
 import { Link as RouterLink } from 'react-router-dom';
 
 export default function ListItemLink(props) {
@@ -11,7 +12,7 @@ export default function ListItemLink(props) {
 
   const renderLink = React.useMemo(
     () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
-    [to],
+    [to]
   );
 
   return (
@@ -23,6 +24,10 @@ export default function ListItemLink(props) {
     </List>
   );
 }
+
+ListItemLink.defaultProps = {
+  icon: <ErrorIcon />, // defaultでerror iconの表示
+};
 
 ListItemLink.propTypes = {
   icon: PropTypes.element,
