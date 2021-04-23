@@ -10,7 +10,14 @@ import Title from './Title';
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+  return {
+    id,
+    date,
+    name,
+    shipTo,
+    paymentMethod,
+    amount,
+  };
 }
 
 const rows = [
@@ -34,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Orders() {
   const classes = useStyles();
   return (
-    <React.Fragment>
+    <>
       <Title>Recent Orders</Title>
       <Table size="small">
         <TableHead>
@@ -59,10 +66,10 @@ export default function Orders() {
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" to="/" onClick={preventDefault}>
           See more orders
         </Link>
       </div>
-    </React.Fragment>
+    </>
   );
 }

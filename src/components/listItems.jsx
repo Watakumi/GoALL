@@ -9,10 +9,10 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import GET_LABELS from '../graphql/queries/GetLabels';
 import { useQuery } from '@apollo/client';
-import ListItemLink from './ListItemLink';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import GET_LABELS from '../graphql/queries/GetLabels';
+import ListItemLink from './ListItemLink';
 
 export const mainListItems = (
   <div>

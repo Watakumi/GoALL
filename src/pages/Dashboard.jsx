@@ -10,11 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import {
+  HashRouter, Route, Switch, Link as RouterLink,
+} from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 import Main from './Main';
 import LabelList from './LabelList';
 import Sidebar from './Sidebar';
-import { HashRouter, Route, Switch, Link as RouterLink } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
 import CardList from '../components/CardList';
 
 const drawerWidth = 240;
