@@ -18,25 +18,21 @@ import ADD_LABEL from '../graphql/mutations/AddLabel';
 import GET_LABELS from '../graphql/queries/GetLabels';
 
 const FormDialog = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const [addLabel] = useMutation(ADD_LABEL);
-
   const { control, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
     addLabel({
       variables: { name: data.name },
     });
     reset({ name: '' });
     handleClose();
-  };
-
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
