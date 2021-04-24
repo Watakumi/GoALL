@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -33,7 +34,12 @@ export default function LabelCard({ label }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">詳細</Button>
+        <Button size="small" color="primary" component={RouterLink} to={`/labels/${label.id}`}>
+          詳細
+        </Button>
+        <Button size="small" color="primary">
+          編集
+        </Button>
       </CardActions>
     </Card>
   );
