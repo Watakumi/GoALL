@@ -10,7 +10,7 @@ module.exports = merge(common, {
   target: 'web',
   devtool: 'inline-source-map',
   entry: {
-    main: './src/index.js',
+    main: './src/index.jsx',
   },
   output: {
     path: outputPath,
